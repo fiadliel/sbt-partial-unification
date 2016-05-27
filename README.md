@@ -16,6 +16,9 @@ addSbtPlugin("org.lyranthe.sbt" % "partial-unification" % "0.0.2")
 
 This will be automatically enabled for all projects.
 
+_Note:_ The plugin should soon be present in the default SBT plugin repository,
+so the resolver settings will not then need to be changed.
+
 ## Disabling for a project
 
 To disable the plugin for a particular project, use the `.disablePlugins` method, e.g.:
