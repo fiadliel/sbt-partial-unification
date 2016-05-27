@@ -19,6 +19,15 @@ This will be automatically enabled for all projects.
 _Note:_ The plugin should soon be present in the default SBT plugin repository,
 so the resolver settings will not then need to be changed.
 
+## Changing the plugin version
+
+The setting `partialUnificationModule` describes which plugin should be used to
+fill in functionality for Scala 2.10 and 2.11, and may be updated.
+
+```scala
+partialUnificationModule := "com.milessabin" % "si2712fix-plugin" % "1.2.0"
+```
+
 ## Disabling for a project
 
 To disable the plugin for a particular project, use the `.disablePlugins` method, e.g.:
