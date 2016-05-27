@@ -30,7 +30,7 @@ object PartialUnification extends AutoPlugin {
 
   override val projectSettings = Seq(
     partialUnificationModule := "com.milessabin" % "si2712fix-plugin" % "1.2.0",
-    libraryDependencies ++= scalaVersionToDependencies(scalaVersion.value, partialUnificationModule.value),
+    libraryDependencies ++= scalaVersionToDependencies(scalaBinaryVersion.value, partialUnificationModule.value),
     scalacOptions ++= scalaVersionToCompilerFlags(scalaVersion.value)
   )
 }
