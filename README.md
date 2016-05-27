@@ -9,15 +9,10 @@ compiler plugin written by Miles Sabin for Scala 2.10 or 2.11.
 Add the following to your SBT build (e.g. to `project/plugins.sbt`):
 
 ```scala
-resolvers += Resolver.bintrayIvyRepo("fiadliel", "sbt-plugins")
-
 addSbtPlugin("org.lyranthe.sbt" % "partial-unification" % "0.0.2")
 ```
 
 This will be automatically enabled for all projects.
-
-_Note:_ The plugin should soon be present in the default SBT plugin repository,
-so the resolver settings will not then need to be changed.
 
 ## Changing the plugin version
 
