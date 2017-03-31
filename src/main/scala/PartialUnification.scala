@@ -23,6 +23,7 @@ object PartialUnification extends AutoPlugin {
       case (2, 11, 8) => pluginDependency
       case (2, 11, p) if p >= 9 => flag
       case (2, 12, _) => flag
+      case (2, 13, _) => flag
       case _ => sys.error(s"scala version $scalaVersion is not supported by this plugin.")
     }
   }
