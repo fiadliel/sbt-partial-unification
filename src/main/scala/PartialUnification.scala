@@ -10,29 +10,26 @@ object PartialUnification extends AutoPlugin {
   object autoImport {
     val partialUnificationModule = settingKey[ModuleID]("Module to add partial unification to scala 2.10/2.11")
   }
+
   import autoImport._
 
-  def scalaVersionToDependencies(scalaVersion: String, partialUnificationModule: ModuleID): Seq[ModuleID] = {
-    val pluginDependency = compilerPlugin(partialUnificationModule cross CrossVersion.full)
+  def pluginOrFlag(scalaVersion: String, pluginModule: ModuleID): Either[ModuleID, String] = {
+    val pluginDependency = Left(compilerPlugin(pluginModule cross CrossVersion.full))
+    val flag = Right("-Ypartial-unification")
+    val VersionNumber((major +: minor +: patch +: _), _, _) = scalaVersion
 
-    scalaVersion match {
-      case VersionNumber((2 +: minor +: _), _, _) if minor < 12 => Seq(pluginDependency)
-      case VersionNumber((2 +: minor +: _), _, _) if minor >= 12 => Seq.empty
-      case VersionNumber((major +: _), _, _) if major > 2 => Seq.empty
-    }
-  }
-
-  def scalaVersionToCompilerFlags(scalaVersion: String): Seq[String] = {
-    scalaVersion match {
-      case VersionNumber((2 +: minor +: _), _, _) if minor < 12 => Seq.empty
-      case VersionNumber((2 +: minor +: _), _, _) if minor >= 12 => Seq("-Ypartial-unification")
-      case VersionNumber((major +: _), _, _) if major > 2 => Seq("-Ypartial-unification")
+    (major, minor, patch) match {
+      case (2, 10, p) if p >= 6 => pluginDependency
+      case (2, 11, 8) => pluginDependency
+      case (2, 11, p) if p >= 9 => flag
+      case (2, 12, _) => flag
+      case _ => sys.error(s"scala version $scalaVersion is not supported by this plugin.")
     }
   }
 
   override val projectSettings = Seq(
     partialUnificationModule := "com.milessabin" % "si2712fix-plugin" % "1.2.0",
-    libraryDependencies ++= scalaVersionToDependencies(scalaVersion.value, partialUnificationModule.value),
-    scalacOptions ++= scalaVersionToCompilerFlags(scalaVersion.value)
+    libraryDependencies ++= pluginOrFlag(scalaVersion.value, partialUnificationModule.value).left.toSeq,
+    scalacOptions ++= pluginOrFlag(scalaVersion.value, partialUnificationModule.value).right.toSeq
   )
 }
