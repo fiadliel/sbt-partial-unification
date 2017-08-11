@@ -1,8 +1,10 @@
+enablePlugins(GitVersioning)
+
+git.useGitDescribe := true
+
 organization := "org.lyranthe.sbt"
 
 name := "partial-unification"
-
-version := "git describe --tags --dirty --always".!!.stripPrefix("v").trim
 
 sbtPlugin := true
 
