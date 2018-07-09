@@ -24,8 +24,7 @@ object PartialUnification extends AutoPlugin {
       case (2, 11, p, _) if p >= 9 => flag
       case (2, 12, _, _) => flag
       case (2, 13, _, milestone +: _) if milestone == "M1" || milestone == "M2" || milestone == "M3" => flag    // ignoring the M4 snapshot
-      case (2, 13, _, _) => Resolution.NothingHappens
-      case _ => sys.error(s"scala version $scalaVersion is not supported by this plugin.")
+      case _ => Resolution.NothingHappens
     }
   }
 
