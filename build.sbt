@@ -15,3 +15,5 @@ publishMavenStyle := false
 bintrayPackageLabels := Seq("sbt", "si-2712", "partial-unification", "scala")
 
 licenses += ("MIT", url("http://opensource.org/licenses/MIT"))
+
+libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.5" % "test"
